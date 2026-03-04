@@ -1,28 +1,65 @@
 html, body {
     margin: 0;
     padding: 0;
+    background-image: url("img/table.png");
+    font-family: "Exo 2", sans-serif;
+    height: 100vh;
 }
 
 body {
-    background-image: url("img/table.png");
     display: flex;
-    flex-direction: column; 
-    min-height: 100vh;
-}
-
-
-#shuffle-deck {
-    background-color: yellow;
-    width: fit-content;
-}
-
-#draw-cards {
-    background-color: yellow;
-}
-
-#draw-cards-div {
-    display: flex;
-    width: 100%;
     flex-direction: column;
-    margin-top: auto;
+    justify-content: space-between;
+}
+
+button {
+    background-color: #FFF100;
+    cursor: pointer;
+    border: none;
+}
+
+button#new-deck {
+    align-self: flex-start;
+    padding: 5px;
+}
+
+button.draw {
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+.top {
+    display: flex;
+}
+
+p{
+    color: white;
+    margin-top: 1px;
+    margin-left: 10px;
+}
+
+h1,h2 {
+    color: white;
+    align-self: center;
+}
+
+h1 {
+    margin-bottom: 0;
+}
+
+h2 {
+    margin-top: 0;
+}
+#cards {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    justify-content: space-between;
+}
+.card{
+    width: 90px;
+    height: 126px;
+    border: black solid 2px;
+    border-radius: 5px;
+    align-self: center;
 }

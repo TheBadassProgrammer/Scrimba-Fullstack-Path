@@ -15,16 +15,18 @@ document.getElementById("draw-cards").addEventListener("click", () => {
     fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
         .then(res => res.json())
         .then(data => {
-            document.getElementById("cards-images").innerHTML=`
-            <img src="${data.cards[0].image}">
-            <img src="${data.cards[1].image}">
-            `
+            console.log(data.cards)
+            let cardsArr = document.getElementById("cards").children
+            cardsArr[0].style = `background: url(${data.cards[0].image}); background-size: cover`
+            cardsArr[1].style = `background: url(${data.cards[1].image}); background-size: cover`
         })
 })
 /**
  * Challenge:
  * 
- * Display the images of the 2 cards you drew in the browser.
- * Probably best to use `innerHTML` to insert a couple <img> elements
- * on the page.
+ * Place each of the cards we draw into its respective card-slot
+ * Hint: consider using element.children in the DOM instead of
+ * giving each card-slot its own unique ID
+ * 
+ * https://developer.mozilla.org/en-US/docs/Web/API/Element/children
  */

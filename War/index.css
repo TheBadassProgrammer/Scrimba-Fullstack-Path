@@ -2,3 +2,27 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+body {
+    background-image: url("img/table.png");
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh;
+}
+
+
+#shuffle-deck {
+    background-color: yellow;
+    width: fit-content;
+}
+
+#draw-cards {
+    background-color: yellow;
+}
+
+#draw-cards-div {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-top: auto;
+}

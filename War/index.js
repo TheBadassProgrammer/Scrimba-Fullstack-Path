@@ -3,11 +3,13 @@ const cardsContainer = document.getElementById("cards")
 const newDeckBtn = document.getElementById("new-deck")
 const drawCardBtn = document.getElementById("draw-cards")
 const header = document.getElementById("header")
+const remainingText = document.getElementById("remaining")
 
 function handleClick() {
     fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
         .then(res => res.json())
         .then(data => {
+            remainingText.textContent = `Remaining cards: ${data.remaining}`
             deckId = data.deck_id
             console.log(deckId)
         })
@@ -18,15 +20,19 @@ newDeckBtn.addEventListener("click", handleClick)
 /**
  * Challenge:
  * 
- * Display the number of cards remaining in the deck on the page
- * Hint: Check the data that comes back when we draw 2 new cards
- * to see if there's anything helpful there for this task (😉)
+ * Disable the Draw button when we have no more cards to draw from
+ * in the deck.
+ * 
+ * Disable both the functionality of the button (i.e. change
+ * `disabled` to true on the button) AND the styling (i.e. add
+ * a `disabled` CSS class to make it look unclickable)
  */
-let remaining = 52
+
 drawCardBtn.addEventListener("click", () => {
     fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
         .then(res => res.json())
         .then(data => {
+            remainingText.textContent = `Remaining cards: ${data.remaining}`
             cardsContainer.children[0].innerHTML = `
                 <img src=${data.cards[0].image} class="card" />
             `
@@ -35,7 +41,11 @@ drawCardBtn.addEventListener("click", () => {
             `
             const winnerText = determineCardWinner(data.cards[0], data.cards[1])
             header.textContent = winnerText
-            document.getElementById("remaining").innerText = `Remaining: ${data.remaining}`
+            if(data.remaining == 0){
+                let btn = document.getElementById("draw-cards")
+                btn.disabled = true; 
+                btn.classList.add("disabled");
+            }
         })
 })
 

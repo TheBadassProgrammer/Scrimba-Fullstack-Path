@@ -1,9 +1,13 @@
 let deckId
+let computerScore = 0
+let myScore = 0
 const cardsContainer = document.getElementById("cards")
 const newDeckBtn = document.getElementById("new-deck")
 const drawCardBtn = document.getElementById("draw-cards")
 const header = document.getElementById("header")
 const remainingText = document.getElementById("remaining")
+const computerScoreEl = document.getElementById("computer-score")
+const myScoreEl = document.getElementById("my-score")
 
 function handleClick() {
     fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
@@ -16,18 +20,7 @@ function handleClick() {
 }
 
 newDeckBtn.addEventListener("click", handleClick)
-
-/**
- * Challenge:
- * 
- * Disable the Draw button when we have no more cards to draw from
- * in the deck.
- * 
- * Disable both the functionality of the button (i.e. change
- * `disabled` to true on the button) AND the styling (i.e. add
- * a `disabled` CSS class to make it look unclickable)
- */
-
+isOver = false
 drawCardBtn.addEventListener("click", () => {
     fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
         .then(res => res.json())
@@ -41,26 +34,48 @@ drawCardBtn.addEventListener("click", () => {
             `
             const winnerText = determineCardWinner(data.cards[0], data.cards[1])
             header.textContent = winnerText
-            if(data.remaining == 0){
-                let btn = document.getElementById("draw-cards")
-                btn.disabled = true; 
-                btn.classList.add("disabled");
+            
+            if (data.remaining === 0) {
+                drawCardBtn.disabled = true
+                isOver = true
+                header.textContent = finalWinner(isOver)
             }
         })
 })
+
+/**
+ * Challenge:
+ * 
+ * Display the final winner in the header at the top by
+ * replacing the text of the h2.
+ */
 
 function determineCardWinner(card1, card2) {
     const valueOptions = ["2", "3", "4", "5", "6", "7", "8", "9", 
     "10", "JACK", "QUEEN", "KING", "ACE"]
     const card1ValueIndex = valueOptions.indexOf(card1.value)
     const card2ValueIndex = valueOptions.indexOf(card2.value)
-    
     if (card1ValueIndex > card2ValueIndex) {
-        return "Card 1 wins!"
+        computerScore++
+        computerScoreEl.textContent = `Computer score: ${computerScore}`
+        return "Computer wins!"
     } else if (card1ValueIndex < card2ValueIndex) {
-        return "Card 2 wins!"
+        myScore++
+        myScoreEl.textContent = `My score: ${myScore}`
+        return "You win!"
     } else {
         return "War!"
     }
 }
 
+function finalWinner(isOver){
+    if (isOver){
+        if (computerScore > myScore) {
+            return "Computer won!"
+        } else if (computerScore < myScore) {
+            return "You won!"
+        } else {
+            return "Tied"
+        }    
+    } 
+}

@@ -3,6 +3,7 @@ const searchBox = document.getElementById("search-txt")
 
 let watchlist = []
 let movie = {}
+
 searchBtn.addEventListener("click", async () => {
     const searchTxt = searchBox.value
     console.log(searchTxt)
@@ -16,8 +17,6 @@ function addWatchlist(){
     watchlist.push(movie)
     console.log(watchlist)
 }
-
-
 
 
 async function searchMovie(searchTxt){

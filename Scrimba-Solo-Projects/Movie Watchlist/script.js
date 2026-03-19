@@ -1,21 +1,32 @@
 const searchBtn = document.getElementById("search-btn")
 const searchBox = document.getElementById("search-txt")
 
+let watchlist = []
+let movie = {}
 searchBtn.addEventListener("click", async () => {
     const searchTxt = searchBox.value
     console.log(searchTxt)
     const data = await searchMovie(searchTxt)
-    displayMovies(data)
+    movie = data
+    console.log(movie)
+    displayMovie(data)
 })
 
+function addWatchlist(){
+    watchlist.push(movie)
+    console.log(watchlist)
+}
+
+
+
+
 async function searchMovie(searchTxt){
-    const response = await fetch(`http://www.omdbapi.com/?t=${searchTxt}&apikey=ba2d466e`)
+    const response = await fetch(`http://www.omdbapi.com/?t=${searchTxt}&apikey=ba2d466e`) //use s instead of t to get list of movies
     const data = await response.json()
     return data
 }
 
-function displayMovies(movie) {
-    console.log(movie.Title)
+function displayMovie(movie) {
     const html = `
     <div class="films-container">
             <div class="movie">
@@ -29,7 +40,7 @@ function displayMovies(movie) {
                     <div class="runtime-genre-watchlist">
                         <h3>${movie.Runtime}</h3>
                         <h3>${movie.Genre}</h3>
-                        <a id="add-watchlist-btn" href="watchlist.html"><img src="images/plus-icon.png"> Watchlist</a>
+                        <button id="add-watchlist-btn" onclick="addWatchlist()"><img src="images/plus-icon.png"> Watchlist</button>
                     </div>
                     <p class="plot">${movie.Plot}</p>
                 </div>

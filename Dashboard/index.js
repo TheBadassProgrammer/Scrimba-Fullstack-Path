@@ -39,7 +39,14 @@ function getCurrentTime() {
 setInterval(getCurrentTime, 10000)
 
 
-
 navigator.geolocation.getCurrentPosition(position => {
     console.log(position)
+    const url = new URL('https://apis.scrimba.com/openweathermap/data/2.5/weather');
+    const params = { lat: position.coords.latitude, lon: position.coords.longitude, units: 'metric' };
+
+    url.search = new URLSearchParams(params).toString(); 
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => console.log(data));
 });

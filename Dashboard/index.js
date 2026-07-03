@@ -38,7 +38,7 @@ function getCurrentTime() {
 
 setInterval(getCurrentTime, 10000)
 
-
+//changed this
 navigator.geolocation.getCurrentPosition(position => {
     console.log(position)
     const url = new URL('https://apis.scrimba.com/openweathermap/data/2.5/weather');

@@ -1,27 +1,41 @@
 import path from 'node:path'
 import fs from 'node:fs/promises'
 import { sendResponse } from './sendResponse.js'
+import { getContentType } from './getContentType.js'
 
 export async function serveStatic(req, res, baseDir) {
-  
-  const filePath = path.join(baseDir, 'public', 'index.html')
+
+  const publicDir = path.join(baseDir, 'public')
+  const filePath = path.join(
+    publicDir,
+    req.url === '/' ? 'index.html' : req.url
+  )
+
+  const ext = path.extname(filePath)
+
+  const contentType = getContentType(ext)
 
   try {
     const content = await fs.readFile(filePath)
-    sendResponse(res, 200, 'text/html', content)
+    sendResponse(res, 200, contentType, content)
+
   } catch (err) {
-    console.log(err)
-  }
-
+    if (err.code === 'ENOENT') {
+      const content = await fs.readFile(path.join(publicDir, '404.html'))
+      sendResponse(res, 404, 'text/html', content)
+    } else {
+      sendResponse(res, 500, 'text/html', '<html><h1>Server Error: ${err.code}</h1></html>')
+    }
 /*
-Challenge 3:
+Challenge:
 
-- Import sendResponse() and use it to serve index.html. 
-  Pass in all of the information sendResponse() is expecting.
-  serveStatic() will need another param. What is it?
+ If the error code is “ENOENT”, serve the 404.html page.  
+ If there’s another error, serve a 500 with this string: 
+ `<html><h1>Server Error: ${err.code}</h1></html>`. 
 
-  Make any changes necessary in server.js and delete any unneeded code.
-
+The Content-Type for the 500 can be ‘text/html’.
 */
+    console.log(err.code)
+  }
 
 }

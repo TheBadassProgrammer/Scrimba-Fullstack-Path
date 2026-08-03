@@ -1,13 +1,6 @@
-Challenge 1:
- Use the readFile() method and pass in the path to index.html.
- Do not specify encoding - we want a buffer.
-
-
-Challenge 2:
- Remember to set the status code and the Content-Type, and to include a payload.
-
-
-Challenge 3:
- You can write code inside the try block.
- In server.js, remember to pass 'res' to serveStatic.
- Delete the code in server.js. which sets headers and status code, and sends the response.
+1. To keep things neat, create a path to the 'public' folder.
+2. Use a ternary to get the path to the file to serve (remember, a request to '/' is a request for index.html).
+3. Get the extension from path's extname() method.
+4. Use the extension to get the Content-Type from getContentType(). 
+5. Pass sendResponse() the correct content-contentType.
+6. Test.

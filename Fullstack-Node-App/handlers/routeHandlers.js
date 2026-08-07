@@ -1,21 +1,24 @@
-// handleGet
-import { getData } from "../utils/getData.js"
-import { sendResponse } from "../utils/sendResponse.js"
-/*
-Challenge:
-1. Export a function called handleGet(). 
-2. It should:
-   - use getData() to get the data
-   - stringify that data
-   - use sendResponse() to serve it
-   
-Open the browser and load the sightings page to see if it works.
-*/
+import { getData } from '../utils/getData.js'
+import { sendResponse } from '../utils/sendResponse.js'
+import { parseJSONBody } from '../utils/parseJSONBody.js'
+import { addNewSighting } from '../utils/addNewSighting.js'
 
 export async function handleGet(res) {
   const data = await getData()
-  const dataString = JSON.stringify(data)
-  sendResponse(res, 200, "application/json", dataString)
+  const content = JSON.stringify(data)
+  sendResponse(res, 200, 'application/json', content)
 }
 
-// handlePost
+export async function handlePost(req, res) {
+
+  try {
+    const parsedBody = await parseJSONBody(req)
+    await addNewSighting(parsedBody)
+    sendResponse(res, 201, 'application/json', JSON.stringify(parsedBody))
+  } catch (err) {
+    sendResponse(res, 400, 'application/json', JSON.stringify({error: err}))
+  }
+
+}
+
+

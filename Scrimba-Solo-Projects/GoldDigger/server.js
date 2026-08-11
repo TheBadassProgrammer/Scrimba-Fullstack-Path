@@ -28,6 +28,29 @@ const server = http.createServer((req, res) => {
       break;
   }
 
+  //route for handling investment data
+  if (req.url === "/api/invest" && req.method === "POST") {
+    let body = "";
+    req.on("data", chunk => {
+      body += chunk.toString();
+    });
+    req.on("end", () => {
+      const investmentData = JSON.parse(body);
+
+      //writing data to a file named data.txt
+      const dataFilePath = path.join(__dirname, "data", "data.txt");
+      fs.appendFile(dataFilePath, JSON.stringify(investmentData) + "\n", err => {
+          if (err) {
+              console.error("Error writing to file", err);
+          }
+      });
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "Investment data received successfully" }));
+    });
+    return
+  }
+
   fs.readFile(filePath, (err, content) => {
     if (err) {
       if (err.code === "ENOENT") {
@@ -44,6 +67,8 @@ const server = http.createServer((req, res) => {
       res.end(content, "utf-8");
     }
   });
+
+
 });
 
 server.listen(PORT, () => {

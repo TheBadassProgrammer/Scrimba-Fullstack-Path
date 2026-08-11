@@ -11,7 +11,8 @@ setInterval(updatePrice, 1000);
 
 
 
-const investButton = document.getElementById("invest-button");
+const investButton = document.getElementById("invest-btn");
+
 investButton.addEventListener("click", () => {
   const timeOfInvestment = new Date().toLocaleTimeString();
   const investmentAmount = document.getElementById("investment-amount").value;

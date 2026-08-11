@@ -1,43 +1,66 @@
 const priceDisplay = document.getElementById("price-display");
+const investButton = document.getElementById("invest-btn");
+const investmentAmountInput = document.getElementById("investment-amount");
+const dialog = document.querySelector(".outputs");
+const dialogSummary = document.getElementById("investment-summary");
+const dialogOkButton = dialog.querySelector("button");
 
-// Function to update the price display to any random number between 1800 and 2200
+// Update price
 function updatePrice() {
-  const randomPrice = Math.floor(Math.random() * (2200 - 1800 + 1)) + 1800;
-  priceDisplay.textContent = `${randomPrice}`;
+    const randomPrice =
+        Math.floor(Math.random() * (2200 - 1800 + 1)) + 1800;
+
+    priceDisplay.textContent = randomPrice;
 }
 
-// Update the price every second
 setInterval(updatePrice, 1000);
 
-
-
-const investButton = document.getElementById("invest-btn");
-
+// Invest button
 investButton.addEventListener("click", () => {
-  const timeOfInvestment = new Date().toLocaleTimeString();
-  const investmentAmount = document.getElementById("investment-amount").value;
-  const currentPrice = parseInt(priceDisplay.textContent);
-  const goldSold = investmentAmount / currentPrice;
-  const data = {
-    time: timeOfInvestment,
-    amount: investmentAmount,
-    price: currentPrice,
-    goldSold: goldSold.toFixed(4)
-  };
+    const timeOfInvestment = new Date().toLocaleTimeString();
+    const investmentAmount = Number(investmentAmountInput.value);
+    const currentPrice = parseInt(priceDisplay.textContent);
 
-  // Send the data to the server
-  fetch("/api/invest", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log("Success:", data);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });   
+    if (!investmentAmount || investmentAmount <= 0) {
+        alert("Please enter a valid investment amount.");
+        return;
+    }
+
+    const goldSold = investmentAmount / currentPrice;
+
+    const data = {
+        time: timeOfInvestment,
+        amount: investmentAmount,
+        price: currentPrice,
+        goldSold: goldSold.toFixed(4)
+    };
+
+    // Send data to server
+    fetch("/api/invest", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(result => {
+            console.log("Success:", result);
+
+            // Update dialog content
+            dialogSummary.textContent =
+                `You just bought ${goldSold.toFixed(4)} ounces (ozt) for £${investmentAmount.toFixed(2)}. ` +
+                `You will receive documentation shortly.`;
+
+            // Open dialog
+            dialog.showModal();
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+});
+
+// Close dialog
+dialogOkButton.addEventListener("click", () => {
+    dialog.close();
 });

@@ -1,13 +1,11 @@
-export async function getGenres(){
+export async function getGenres() {
 
   console.log('genres')
 
 }
 
-export async function getProducts(){
+export async function getProducts() {
 
   console.log('products')
 
 }
-
-

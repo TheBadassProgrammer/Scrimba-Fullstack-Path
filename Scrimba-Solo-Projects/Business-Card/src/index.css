@@ -1,0 +1,123 @@
+body {
+  background: #23252C;
+}
+
+main {
+  background-color: #1A1B21;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 317px;
+  height: 780px;
+}
+
+.me {
+  width: 317px;
+  height: 317px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+h1 {
+  margin-bottom: 0px;
+  color: #FFFFFF;
+  font-family: Inter;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 25px;
+  text-align: center;
+}
+
+h2 {
+  color: #F5F5F5;
+  font-family: Inter;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 16px;
+  line-height: 150%;
+}
+
+h3 {
+  margin-top: 0px;
+  color: #F3BF99;
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12.8px;
+  text-align: center;
+}
+
+p {
+  color: #DCDCDC;
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 10.24px;
+  line-height: 150%;
+}
+
+a {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 10.24px;
+  line-height: 150%;
+  text-align: center;
+  color: #FFFFFF;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.email-btn {
+  background-color: #FFFFFF;
+  width: 115px;
+  height: 34px;
+  border-radius: 6px;
+  border-width: 1px;
+  padding-top: 9px;
+  padding-right: 13px;
+  padding-bottom: 9px;
+  padding-left: 11px;
+  gap: 8px;
+  border: 1px solid #D1D5DB;
+  box-shadow: 0px 1px 2px 0px #0000000D;
+  margin-right: 17px;
+}
+
+.linkedin-btn {
+  color: white;
+  width: 115px;
+  height: 34px;
+  border-radius: 6px;
+  padding-top: 9px;
+  padding-right: 13px;
+  padding-bottom: 9px;
+  padding-left: 11px;
+  gap: 8px;
+  background-color: #5093E2;
+  box-shadow: 0px 1px 2px 0px #0000000D;
+}
+
+.about, .interests {
+  text-align: left;
+  margin-left: 36px;
+  margin-right: 36px;
+}
+
+.footer {
+  display: flex;
+  text-align: center;
+  justify-content:space-evenly;
+  align-items: center;
+  margin-top: 35px;
+  background-color: #161619;
+  width: 317px;
+  height: 64px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.social-icons {
+  width: 25px;
+  height: 25px;
+}
